@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
+
+//Components
+import Header from './components/header/Header'
+
+//App.css
 import './App.css';
+import './components/Style.css'
+import ObjectHandler from './components/objectHandler/ObjectHandler';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	//Hook for the data loaded
+	const [response, setResponse] = useState(null);
+
+	const setObjectHandler = (response, type) => {
+		setResponse(<ObjectHandler response={response} type={type}/>)
+	}
+
+	//Return the data
+	return (
+		<div className="App">
+			<Header siteName={"Star Wars"} updateResponse={setObjectHandler}/>
+			<div className="Content">
+				{response ?
+					response
+				:
+					<p><b>Search Something</b></p>
+				}
+			</div>
+		</div>
+	);
 }
 
 export default App;
