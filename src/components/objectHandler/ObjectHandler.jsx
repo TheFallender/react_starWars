@@ -72,7 +72,8 @@ const ObjectHandler = props => {
 
     //New query
     const newQuery = (query, type) => {
-        Axios.get(query, {}).then(response => {
+        let queryFix = query.replace("http://", "https://");
+        Axios.get(queryFix, {}).then(response => {
             setQuery(response, type)
         });
     }
