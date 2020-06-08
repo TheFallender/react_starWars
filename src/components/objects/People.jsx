@@ -26,15 +26,14 @@ const People = props => {
         if (!films) {
             //Promise all the films
             let promiseArr = [];
+
             data.films.forEach(element => {
-                promiseArr.push(Axios.get(element));
+                promiseArr.push(Axios.get(element.replace("http://", "https://")));
             });
 
             Promise.all(promiseArr).then(values => {
                 setFilms(values.map(element => 
-                    <div    className="FilmShort"
-                            key={data.url + element.data.url}
-                    >
+                    <div className="FilmShort" key={data.url + element.data.url}>
                         <p className="shortP">
                             <b className="clickable" onClick={() => setResponse(element.data.url, "films")}>Film {element.data.episode_id} - {element.data.title}</b>
                         </p>
@@ -49,13 +48,13 @@ const People = props => {
         //Set films
         setHomeworldShown(!homeworldShown);
 
+
+        console.log("DAFAK")
         //If Films not cached, load
         if (!homeworld) {
-            Axios.get(data.homeworld).then(response =>
+            Axios.get(data.homeworld.replace("http://", "https://")).then(response =>
                 setHomeworld(
-                    <div    className="PlanetShort"
-                            key={data.url + response.data.url}
-                    >
+                    <div className="PlanetShort" key={data.url + response.data.url}>
                         <p className="shortP">
                             <b className="clickable" onClick={() => setResponse(response.data.url, "planets")}>{response.data.name}</b>
                         </p>
